@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Gönderi Oluştur
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <h2 class="card-title"> Gönderi Oluştur </h2>
+            <br>
+
+            {% if form.errors %}
+
+                {{ form.errors }}
+
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {% include 'form_template.html' %}
+                        <input class="btn btn-info" type="submit" value="Kaydet">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+{% endblock %}

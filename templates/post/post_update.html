@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Gönderi Güncelle
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8 offset-lg-3">
+            <h2 class="card-title"> Güncelle </h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+                {% include 'form_template.html' %}
+
+                <input class="btn btn-info" type="submit" value="Güncelle">
+                <a class="btn btn-danger" href="{% url 'post_list' %}">İptal</a>
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+{% endblock %}

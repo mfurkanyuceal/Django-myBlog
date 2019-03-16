@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Kayıt Ol
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="col-lg-7 offset-lg-3">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% include 'form_template.html' %}
+            <input type="submit" value="Kaydet" class="btn btn-success">
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% for post in post_list %}
+
+            <div>
+                <div class="row" style="height: 20%;">
+                    <div class="col">
+                        <h2 class="card-title">
+                            <a href="{% url 'post_detail' post.slug %}">
+                                {{ post.title|safe }}
+                            </a>
+                            <small>--{{ post.created_date|timesince }} önce</small>
+                            {% if post.draft %}
+                                <small style="color: #761c19">(Taslak)</small>{% endif %}
+                        </h2>
+                    </div>
+                </div>
+                <div class="row" style="height: 80%;">
+                    <div class="col">
+
+                        <div class="row">
+                            <div class="col" style="width: 320px; height: 320px"><img
+                                    src="{{ post.get_image_or_default }}"
+                                    height="300" width="300"></div>
+                            <div class="col" style="width: 700px;height: 50%;">
+                                <table style="height: 100px; width:100%;">
+                                    <tbody>
+
+                                    <p><b>Yazar: </b>{{ post.user.get_full_name }}</p>
+                                    <hr>
+                                    <div class="row offset-1" style="height: 75%;width: 100%;">
+                                        <p>{{ post.content|truncatechars_html:375|safe }}</p>
+                                    </div>
+                                    <div class="row" style="height: 20%;width: 100%;">
+
+                                        <div class="col-lg-3" style="width: 6%;">
+                                            {#                                        <input type="hidden" value="{{ post.slug }}" name="slug">#}
+                                            <a class="btn btn-dark"
+                                               href="{% url 'post_detail' post.slug %}">Detay</a>
+                                        </div>
+                                        {% if request.user == post.user %}
+
+                                            <div class="col-lg-4" style="width: 6%;">
+                                                <a class="btn btn-info"
+                                                   href="{% url 'post_update' post.slug %}">Güncelle</a>
+                                            </div>
+                                            <form class="form-delete" action="{% url 'post_delete' post.slug %}">
+                                                <div class="form-delete col-lg-3" style="width: 6%;">
+                                                    <a class="btn btn-danger"
+                                                       href="{% url 'post_delete' post.slug %}">Sil</a>
+                                                </div>
+                                            </form>
+                                        {% endif %}
+
+                                    </div>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+            </div>
+        {% endfor %}

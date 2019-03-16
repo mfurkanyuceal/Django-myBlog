@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Gönderi İncele
+{% endblock %}
+
+{% block content %}
+
+    <div class="form-row">
+        <br>
+        <div class="col-lg-8 offset-lg-3">
+
+            <h2 class="card-title"><a href="{% url 'post_detail' post.slug %}">{{ post.title }} </a> --
+                <small>{{ post.created_date|timesince }} önce</small>
+            </h2>
+            <div class="form-row">
+                <div class="col-md-4">
+                    <picture>
+                        <img src="{{ post.get_image_or_default }}" class="img-fluid img-thumbnail" width="300"
+                             height="300">
+                    </picture>
+                </div>
+                <div class="col-md-6">
+                    <p><b> Yazar: </b>{{ post.user.get_full_name }}</p>
+                    <hr>
+                    <div class="form-row">
+                        <p>{{ post.content|safe }}</p>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-form-label-sm-2">
+
+                            <a class="btn btn-light" href="{% url 'post_list' %}">Geri Dön</a>
+
+
+                        </div>
+                        {% if request.user == post.user %}
+
+                            <div class="form-group col-form-label-sm-2">
+
+
+                                <a class="btn btn-info" href="{% url 'post_update' post.slug %}">Güncelle</a>
+
+
+                            </div>
+                            <div class="form-group col-form-label-sm-2">
+
+
+                                <a class="btn btn-danger" href="{% url 'post_delete' post.slug %}">Sil</a>
+
+
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                <hr>
+
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    {% if post.comment.all %}
+
+        <div class="form-row">
+            <div class="col-lg-8 offset-lg-3">
+                <h2 class="card-header">{{ post.comment.all|length }} Yorum</h2>
+                <hr>
+                {% for comment in post.comment.all %}
+
+                    <div class="row offset-1" style="height: 20%;">
+                        <div class="col-lg-2">
+                            <img class="image-clean" src="{{ post.user.userprofile.get_image_or_default }}" width="50"
+                                 height="50">
+                        </div>
+                        <div class="col-lg-10">
+                            <h2 class="card-title">
+                                {{ comment.user.get_full_name }}
+                                <small> -- {{ comment.time|timesince }} önce</small>
+                            </h2>
+
+                            <p><b>{{ post.user.get_full_name }}</b></p>
+                            <hr>
+                            <div class="card-body" style="height: 75%;width: 100%;">
+                                <p>{{ comment.content }}</p>
+                                {% for child_comment in comment.comment_child.all %}
+                                    <div class="row offset-1" style="height: 20%;">
+                                        <div class="col-lg-2">
+                                            <img class="image-clean"
+                                                 src="{{ post.user.userprofile.get_image_or_default }}" width="50"
+                                                 height="50">
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <h2 class="card-title">
+                                                {{ comment.user.get_full_name }}
+                                                <small> -- {{ comment.time|timesince }} önce</small>
+                                            </h2>
+
+                                            <p><b>{{ post.user.get_full_name }}</b></p>
+                                            <hr>
+                                            <div class="card-body" style="height: 75%;width: 100%;">
+                                                <p>{{ child_comment.content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="lead offset-lg-3">Henüz Yorum Yapılmadı</p>
+        <br>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-8 offset-lg-3">
+            <h2 class="card-header">Yorum Yap</h2>
+            <br>
+            <div class="offset-lg-1">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {% include 'form_template.html' %}
+                    <input type="submit" value="Yorum Yap" class="btn btn-info ">
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+{% endblock %}

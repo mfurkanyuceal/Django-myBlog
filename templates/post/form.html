@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+
+    <form action="" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <h2>Bir şeyler yaz </h2>
+        <input type="text" name="message">
+        <input type="submit" name="send">
+    </form>
+
+
+    <div>
+
+        {% if sent_message %}
+
+            <h2>Mesaj</h2>
+
+            <p>
+                {{sent_message}}
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

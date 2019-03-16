@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="myDjangoProject@localhost" uuid="b56fd54e-6625-4148-8ad6-23315516c876">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/myDjangoProject</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="myDjangoDB" uuid="e726ad34-10ae-4f6e-b0b4-fc9eba7def25">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/myblog/settings.py</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/myDjangoProject</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Django default" uuid="c6535656-248a-44bf-812c-3d5ad9fdfdea">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/myblog/settings.py</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/myDjangoProject</jdbc-url>
+    </data-source>
+  </component>
+</project>

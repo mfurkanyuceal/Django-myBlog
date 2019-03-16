@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block add_code %}
+
+    <script>
+        $('.form-delete').submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var form_action = form.attr('action');
+            var form_serialize = form.serialize();
+
+            $.ajax({
+                method: 'POST',
+                type: 'json',
+                url: form_action,
+                data: form_serialize,
+                success: function (data) {
+                    console.log(data['success']);
+                    form.parent().remove();
+                }
+            })
+        })
+    </script>
+
+
+{% endblock %}
+
+
+{% block title %}
+    Gönderiler
+{% endblock %}
+
+
+{% block content %}
+    <br>
+
+    <div class="col-lg-6 offset-lg-3">
+        {% if request.user.is_authenticated %}
+            <form method="get">
+                <div class="form-row">
+                    <div class="col-lg-4">
+                        {% for field in filter_form %}
+                            {{ field }}
+                        {% endfor %}
+                    </div>
+                    <div class="col-lg-4">
+                        <input type="submit" class="btn btn-info" value="Sorgula">
+                    </div>
+                </div>
+            </form>
+            <br>
+        {% endif %}
+
+    {% include 'post/post_template.html' %}
+
+        {% if post_list.has_other_pages %}
+            <ul class="pagination">
+                {% if post_list.has_previous %}
+                    <li><a href="?page=
+
+
+                            {{ post_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.choice %}&choice={{ request.GET.choice }}{% endif %}">&laquo;</a>
+                    </li>
+                {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in post_list.paginator.page_range %}
+                    {% if post_list.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page=
+
+
+                                {{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.choice %}&choice={{ request.GET.choice }}{% endif %}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if post_list.has_next %}
+                    <li><a href="?page=
+
+
+                            {{ post_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.choice %}&choice={{ request.GET.choice }}{% endif %}">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+
+        {% endif %}
+    </div>
+
+{% endblock %}
